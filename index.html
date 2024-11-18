@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Demo</title>
+</head>
+<body>
+    <h1>Audio Playback Demo</h1>
+    <p>Click below to play the audio:</p>
+    
+    <!-- Audio Player -->
+    <audio id="audioPlayer" controls>
+        <source src="audiofile.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <h2>Play Specific Segments</h2>
+    <button onclick="playSegment(10, 20)">Play from 10s to 20s</button>
+    <button onclick="playSegment(30, 40)">Play from 30s to 40s</button>
+
+    <script>
+        function playSegment(start, end) {
+            const audio = document.getElementById('audioPlayer');
+            audio.currentTime = start;
+            audio.play();
+
+            // Stop playback at the end time
+            const stopPlayback = () => {
+                if (audio.currentTime >= end) {
+                    audio.pause();
+                    audio.removeEventListener('timeupdate', stopPlayback);
+                }
+            };
+            audio.addEventListener('timeupdate', stopPlayback);
+        }
+    </script>
+</body>
+</html>
